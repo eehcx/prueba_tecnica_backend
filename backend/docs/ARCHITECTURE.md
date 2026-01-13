@@ -41,7 +41,7 @@ HTTP → Controller → Service → Repository → DB
 ```
 
 ## Principios
-- Arquitectura hexagonal
+- Arquitectura hexagonal (ports & adapters)
 - Inyección de dependencias
 - Separación de responsabilidades
 - Repository pattern

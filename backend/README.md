@@ -1,4 +1,4 @@
-# API de Gestión de Gastos
+# Backend
 
 API RESTful para gestión de gastos personales construida con NestJS y arquitectura hexagonal.
 

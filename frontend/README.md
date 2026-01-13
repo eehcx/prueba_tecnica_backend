@@ -1,60 +1,175 @@
-# Nuxt Starter Template
+# Frontend 
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+Aplicación Vue 3 con Nuxt UI para gestionar gastos personales.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+## Características
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+- Interfaz profesional con componentes Nuxt UI
+- Tabla responsiva con vista mobile/desktop
+- Formularios con validación en tiempo real
+- Búsqueda instantánea por descripción
+- Filtros por categoría
+- Paginación cliente/servidor
+- Exportación a Excel y PDF
+- Gráficas interactivas (Chart.js)
+- Responsive design mobile-first
+- TypeScript estricto
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-  </picture>
-</a>
+## Estructura
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
-
-## Quick Start
-
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
+```
+frontend/
+├── app/
+│   ├── components/     # Componentes Vue
+│   │   ├── expenses/   # Componentes de gastos
+│   │   ├── stats/      # Componentes de estadísticas
+│   │   └── layout/     # Componentes de layout
+│   ├── composables/    # Lógica reutilizable
+│   ├── core/          # Entidades, tipos, constantes
+│   ├── pages/         # Vistas (/, /stats)
+│   └── layouts/       # Layouts de aplicación
+├── public/            # Assets estáticos
+└── package.json       # Dependencias
 ```
 
-## Deploy your own
+## Instalación
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+### Prerrequisitos
+- Node.js 18+
+- Backend API corriendo (http://localhost:3001)
 
-## Setup
+### 1. Instalar dependencias
+```bash
+npm install
+```
 
-Make sure to install the dependencies:
+### 2. Configurar variables de entorno
+Crear archivo `.env` en la raíz del frontend:
+```
+NUXT_PUBLIC_API_URL=http://localhost:3001/api
+```
+
+### 3. Iniciar servidor de desarrollo
+```bash
+npm run dev
+```
+
+## Componentes Principales
+
+### ExpenseTable
+Tabla responsiva para listar gastos (vista desktop).
+
+### ExpenseCard
+Tarjeta para mostrar gastos (vista mobile).
+
+### ExpenseFormModal
+Modal para crear/editar gastos con validación.
+
+### DeleteExpenseModal
+Modal de confirmación para eliminar gastos.
+
+### CategoryBarChart
+Gráfica de barras para gastos por categoría.
+
+### MonthlyLineChart
+Gráfica de línea para gastos mensuales.
+
+## Composables
+
+### useExpenses()
+Gestión completa del CRUD de gastos:
+- Listar con paginación
+- Crear, editar, eliminar
+- Búsqueda y filtrado
+- Manejo de estados de carga/error
+
+### useStats()
+Obtención de estadísticas:
+- Totales por categoría
+- Gastos mensuales
+- Resumen general
+
+## Vistas
+
+### Página Principal (/)
+- Listado completo de gastos
+- Filtros y búsqueda
+- Botones de acción (crear, exportar)
+- Paginación
+
+### Estadísticas (/stats)
+- Gráficas interactivas
+- Resumen por categoría
+- Análisis mensual
+- Exportación de reportes
+
+## Configuración
+
+### Variables de entorno
+| Variable | Descripción | Valor por defecto |
+|----------|-------------|-------------------|
+| NUXT_PUBLIC_API_URL | URL del backend API | http://localhost:3001/api |
+
+### Categorías predefinidas
+- comida - Alimentación
+- transporte - Transporte
+- entretenimiento - Entretenimiento
+- supermercado - Supermercado
+- servicios - Servicios
+- salud - Salud
+- educación - Educación
+- vivienda - Vivienda
+- ropa - Ropa
+- tecnología - Tecnología
+- otros - Otros
+
+## Scripts
 
 ```bash
-pnpm install
+npm run dev          # Servidor de desarrollo
+npm run build        # Build para producción
+npm run preview      # Preview de producción
+npm run lint         # Lint del código
 ```
 
-## Development Server
+## Integración con Backend
 
-Start the development server on `http://localhost:3000`:
+La aplicación consume la API REST del backend:
+- Base URL: NUXT_PUBLIC_API_URL
+- Endpoints principales: /expenses, /expenses/stats, /expenses/export/*
+- Autenticación: No requerida (para esta prueba)
 
-```bash
-pnpm dev
-```
+## Responsive Design
 
-## Production
+- Desktop: Tabla con todas las columnas
+- Tablet: Tabla simplificada
+- Mobile: Vista de tarjetas (cards)
+- Breakpoints: Tailwind CSS defaults
 
-Build the application for production:
+## Requisitos Frontend Cumplidos
 
-```bash
-pnpm build
-```
+- Página principal con listado de gastos
+- Modal para crear gasto
+- Modal para editar gasto
+- Confirmación para eliminar gasto
+- Tabla responsiva con Nuxt UI
+- Formularios con validación
+- Búsqueda en tiempo real
+- Paginación
+- Filtros por categoría
+- Indicadores de carga
+- Mensajes de éxito/error
+- Responsive design
+- Manejo de estados vacíos
 
-Locally preview production build:
+## Tecnologías
 
-```bash
-pnpm preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Framework: Vue 3 (Composition API)
+- Meta-framework: Nuxt 3
+- UI Library: Nuxt UI (Tailwind CSS)
+- TypeScript: 5+
+- Gráficas: Chart.js
+- HTTP Client: Fetch API
+- Estado: Composables reactivos
+- Validación: Validadores personalizados
+- Build Tool: Vite
