@@ -51,10 +51,15 @@ export class ExpenseTypeOrmRepository implements ExpenseRepository {
     async search(query: string, page: number, limit: number): Promise<[Expense[], number]> {
         try {
             console.log(`Searching for: "${query}", page: ${page}, limit: ${limit}`);
+            
+            // Validar parámetros de paginación
+            const validPage = Math.max(1, page);
+            const validLimit = Math.max(1, Math.min(limit, 100));
+            
             const [entities, total] = await this.repo.findAndCount({
                 where: { description: ILike(`%${query}%`) },
-                skip: (page - 1) * limit,
-                take: limit,
+                skip: (validPage - 1) * validLimit,
+                take: validLimit,
                 order: { date: 'DESC' }
             });
             

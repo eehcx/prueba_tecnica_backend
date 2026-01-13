@@ -21,11 +21,6 @@ export class ExpensesController {
     return this.expenseService.findAll(page, limit, category);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.expenseService.findOne(+id);
-  }
-
   @Get('search')
   search(
     @Query('query') query: string,
@@ -35,13 +30,33 @@ export class ExpensesController {
     return this.expenseService.search(query, page, limit);
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    // Validar que el id sea un número válido
+    const parsedId = parseInt(id, 10);
+    if (isNaN(parsedId)) {
+      // Si no es un número, podría ser la ruta 'search' u otra ruta especial
+      // En este caso, devolvemos un error 404
+      throw new Error(`Invalid expense ID: ${id}`);
+    }
+    return this.expenseService.findOne(parsedId);
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() updateExpenseDto: UpdateExpenseDto) {
-    return this.expenseService.update(+id, updateExpenseDto);
+    const parsedId = parseInt(id, 10);
+    if (isNaN(parsedId)) {
+      throw new Error(`Invalid expense ID: ${id}`);
+    }
+    return this.expenseService.update(parsedId, updateExpenseDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.expenseService.remove(+id);
+    const parsedId = parseInt(id, 10);
+    if (isNaN(parsedId)) {
+      throw new Error(`Invalid expense ID: ${id}`);
+    }
+    return this.expenseService.remove(parsedId);
   }
 }

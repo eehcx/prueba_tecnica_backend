@@ -46,11 +46,22 @@ export class ExpenseService {
 
   async search(query: string, page: number, limit: number) {
     console.log(`ExpenseService.search called with query: "${query}", page: ${page}, limit: ${limit}`);
+    
+    // Validar parámetros
+    if (!query || query.trim() === '') {
+      // Si la query está vacía, devolver resultados vacíos
+      return new PaginatedResponse([], 0, page, limit, 0);
+    }
+    
+    // Validar paginación
+    const validPage = Math.max(1, page);
+    const validLimit = Math.max(1, Math.min(limit, 100)); // Limitar a 100 máximo
+    
     try {
-      const [data, total] = await this.expenseRepository.search(query, page, limit);
+      const [data, total] = await this.expenseRepository.search(query, validPage, validLimit);
       console.log(`ExpenseService.search repository returned: ${data.length} items, total: ${total}`);
-      const totalPages = Math.ceil(total / limit);
-      return new PaginatedResponse(data, total, page, limit, totalPages);
+      const totalPages = Math.ceil(total / validLimit);
+      return new PaginatedResponse(data, total, validPage, validLimit, totalPages);
     } catch (error) {
       console.error('Search error in ExpenseService:', error);
       throw error;

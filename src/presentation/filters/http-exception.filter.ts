@@ -18,7 +18,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
             ? exception.getResponse()
             : 'Internal server error';
 
-        /*console.error('=== ALL EXCEPTIONS FILTER ===');
+        console.error('=== ALL EXCEPTIONS FILTER ===');
         console.error('Error:', exception);
         console.error('URL:', request.url);
         console.error('Method:', request.method);
@@ -26,7 +26,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
             console.error('Error name:', exception.name);
             console.error('Error message:', exception.message);
             console.error('Error stack:', exception.stack);
-        }*/
+        }
 
         response.status(status).json({
             statusCode: status,
