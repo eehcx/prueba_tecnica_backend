@@ -15,6 +15,20 @@ Aplicación Vue 3 con Nuxt UI para gestionar gastos personales.
 - Responsive design mobile-first
 - TypeScript estricto
 
+## Mejoras Recientes
+
+### Navegación Responsive Mejorada
+- **Header adaptativo**: Implementación completa de menú hamburguesa para dispositivos móviles
+- **Separación de responsabilidades**: Refactorización del código para separar lógica de negocio (composables) de componentes UI
+- **Experiencia mobile-first**: Navegación optimizada para dispositivos móviles con iconos y textos abreviados
+- **Estado visual**: Indicadores claros de la ruta activa en ambos modos (desktop/mobile)
+
+### Arquitectura Mejorada
+- **Composables especializados**: `useExpenseUI()` para gestión de estado de UI y `useExport()` para funcionalidades de exportación
+- **Componentes modulares**: Separación de componentes por responsabilidad (layout, expenses, stats, common)
+- **TypeScript estricto**: Tipos definidos para todas las entidades y funciones
+- **Patrones modernos**: Implementación de estado reactivo con `ref()` y `reactive()` y separación de preocupaciones
+
 ## Estructura
 
 ```
@@ -56,23 +70,50 @@ npm run dev
 
 ## Componentes Principales
 
-### ExpenseTable
+### Layout Components
+
+#### Navigation Header (`default.vue`)
+Header responsive con navegación adaptativa:
+- **Desktop**: Navegación completa con texto e iconos
+- **Mobile**: Menú hamburguesa con iconos, texto abreviado
+- **Características**:
+  - Navegación entre páginas (Inicio/Estadísticas)
+  - Estado activo visual (resaltado de ruta actual)
+  - Texto contextual dinámico según la página
+  - Diseño responsive con breakpoints Tailwind
+
+#### AppFooter
+Footer de la aplicación con información básica.
+
+### Expense Components
+
+#### ExpenseTable
 Tabla responsiva para listar gastos (vista desktop).
 
-### ExpenseCard
+#### ExpenseCard
 Tarjeta para mostrar gastos (vista mobile).
 
-### ExpenseFormModal
+#### ExpenseFormModal
 Modal para crear/editar gastos con validación.
 
-### DeleteExpenseModal
+#### DeleteExpenseModal
 Modal de confirmación para eliminar gastos.
 
-### CategoryBarChart
+### Stats Components
+
+#### CategoryBarChart
 Gráfica de barras para gastos por categoría.
 
-### MonthlyLineChart
+#### MonthlyLineChart
 Gráfica de línea para gastos mensuales.
+
+#### StatsSummary
+Resumen estadístico de gastos.
+
+### Common Components
+
+#### Pagination
+Componente de paginación reutilizable.
 
 ## Composables
 
@@ -82,12 +123,28 @@ Gestión completa del CRUD de gastos:
 - Crear, editar, eliminar
 - Búsqueda y filtrado
 - Manejo de estados de carga/error
+- Estado reactivo con `ref()` y `reactive()`
 
 ### useStats()
 Obtención de estadísticas:
 - Totales por categoría
 - Gastos mensuales
 - Resumen general
+- Cálculos en tiempo real
+
+### useExpenseUI()
+Gestión del estado de UI para gastos:
+- Control de modales (crear/editar/eliminar)
+- Estado de gasto seleccionado
+- Funciones para abrir/cerrar modales
+- Separación de lógica de presentación
+
+### useExport()
+Funcionalidades de exportación:
+- Exportación a Excel con formato
+- Exportación a PDF con diseño
+- Estados de carga para exportaciones
+- Manejo de filtros en exportaciones
 
 ## Vistas
 
@@ -141,13 +198,33 @@ La aplicación consume la API REST del backend:
 
 ## Responsive Design
 
-- Desktop: Tabla con todas las columnas
-- Tablet: Tabla simplificada
-- Mobile: Vista de tarjetas (cards)
-- Breakpoints: Tailwind CSS defaults
+### Layout Responsive
+- **Header Navigation**: Menú hamburguesa en mobile, navegación completa en desktop
+- **Content Layout**: Grids flexibles con breakpoints Tailwind
+- **Component Adaptation**: Componentes específicos por dispositivo (tabla vs cards)
+
+### Breakpoints Implementados
+- **Mobile (< 768px)**: 
+  - Menú hamburguesa con iconos
+  - Vista de tarjetas (ExpenseCard)
+  - Textos abreviados
+  - Padding reducido
+- **Tablet (768px - 1024px)**:
+  - Navegación simplificada
+  - Tablas adaptativas
+- **Desktop (> 1024px)**:
+  - Navegación completa con texto
+  - Tabla con todas las columnas (ExpenseTable)
+  - Texto descriptivo completo
+
+### Mobile-First Approach
+- Desarrollo comenzando por mobile
+- Progressive enhancement para desktop
+- Media queries con clases Tailwind (`md:`, `lg:`)
 
 ## Requisitos Frontend Cumplidos
 
+### Funcionalidades Básicas
 - Página principal con listado de gastos
 - Modal para crear gasto
 - Modal para editar gasto
@@ -157,19 +234,63 @@ La aplicación consume la API REST del backend:
 - Búsqueda en tiempo real
 - Paginación
 - Filtros por categoría
+
+### Experiencia de Usuario
 - Indicadores de carga
 - Mensajes de éxito/error
-- Responsive design
 - Manejo de estados vacíos
+- Feedback visual en interacciones
+- Navegación intuitiva
 
-## Tecnologías
+### Responsive Design
+- Header con navegación adaptativa (menú hamburguesa en mobile)
+- Vista dual: tabla para desktop, cards para mobile
+- Layouts fluidos con Tailwind CSS
+- Textos adaptativos según dispositivo
 
-- Framework: Vue 3 (Composition API)
-- Meta-framework: Nuxt 3
-- UI Library: Nuxt UI (Tailwind CSS)
-- TypeScript: 5+
-- Gráficas: Chart.js
-- HTTP Client: Fetch API
-- Estado: Composables reactivos
-- Validación: Validadores personalizados
-- Build Tool: Vite
+### Arquitectura Moderna
+- Separación de responsabilidades (components/composables)
+- TypeScript estricto con tipos definidos
+- Composables reutilizables para lógica de negocio
+- Componentes modulares y mantenibles
+
+## Tecnologías y Arquitectura
+
+### Core Technologies
+- **Framework**: Vue 3 (Composition API)
+- **Meta-framework**: Nuxt 3
+- **UI Library**: Nuxt UI (Tailwind CSS)
+- **TypeScript**: 5+ con tipos estrictos
+- **Gráficas**: Chart.js
+- **HTTP Client**: Fetch API
+- **Estado**: Composables reactivos con `ref()` y `reactive()`
+- **Validación**: Validadores personalizados
+- **Build Tool**: Vite
+
+### Patrones de Diseño Implementados
+- **Separación de Responsabilidades**: Lógica de negocio en composables, UI en componentes
+- **Mobile-First**: Desarrollo responsive comenzando por mobile
+- **Component-Based Architecture**: Componentes modulares y reutilizables
+- **Reactive State Management**: Estado reactivo con `ref()` y `reactive()` en composables
+- **Type Safety**: Tipos estrictos para datos y funciones
+
+### Estructura de Código
+```
+frontend/app/
+├── components/          # Componentes Vue (UI)
+│   ├── expenses/       # Componentes específicos de gastos
+│   ├── stats/          # Componentes de estadísticas
+│   ├── layout/         # Componentes de layout (header/footer)
+│   └── common/         # Componentes reutilizables
+├── composables/        # Lógica de negocio reutilizable
+├── core/              # Entidades, tipos, constantes, validadores
+├── pages/             # Vistas/rutas principales
+└── layouts/           # Layouts de aplicación
+```
+
+### Principios de Desarrollo
+- **Clean Code**: Código legible y mantenible
+- **Type Safety**: Cero uso de `any`, tipos explícitos
+- **Performance**: Optimizaciones específicas donde importan
+- **Accessibility**: ARIA labels, HTML semántico
+- **Security**: Validación de inputs, sanitización
