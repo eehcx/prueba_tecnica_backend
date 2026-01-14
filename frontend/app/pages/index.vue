@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ExpenseTable from '../components/expenses/ExpenseTable.vue'
 import ExpenseCard from '../components/expenses/ExpenseCard.vue'
 import ExpenseFormModal from '../components/expenses/ExpenseFormModal.vue'
 import DeleteExpenseModal from '../components/expenses/DeleteExpenseModal.vue'
+import Pagination from '../components/common/Pagination.vue'
 import { useExpenses } from '../composables/useExpenses'
+import { useExport } from '../composables/useExport'
+import { useExpenseUI } from '../composables/useExpenseUI'
 import { CATEGORIES } from '../core/constants/categories'
-import { expenseService, type ExportFilters } from '../data/datasource/remote/expense.service'
 import type { Expense } from '../core/entities/Expense'
 
-// Toast de Nuxt UI
-import { useToast } from '#imports'
-const toast = useToast()
 const router = useRouter()
 
 const {
@@ -29,34 +27,25 @@ const {
   error
 } = useExpenses()
 
-// Modales
-const isFormOpen = ref(false)
-const isDeleteOpen = ref(false)
+// UI State
+const {
+  isFormOpen,
+  isDeleteOpen,
+  selectedExpense,
+  openCreate,
+  openEdit,
+  openDelete,
+  closeForm,
+  closeDelete
+} = useExpenseUI()
 
-// Estados para exportación
-const isExportingExcel = ref(false)
-const isExportingPdf = ref(false)
-
-// Gasto seleccionado
-const selectedExpense = ref<Expense | null>(null)
-
-// Crear
-function openCreate() {
-  selectedExpense.value = null
-  isFormOpen.value = true
-}
-
-// Editar
-function openEdit(expense: Expense) {
-  selectedExpense.value = expense
-  isFormOpen.value = true
-}
-
-// Eliminar
-function openDelete(expense: Expense) {
-  selectedExpense.value = expense
-  isDeleteOpen.value = true
-}
+// Export functionality
+const {
+  isExportingExcel,
+  isExportingPdf,
+  exportExcel,
+  exportPdf
+} = useExport()
 
 // Submit real con API
 async function handleSubmit(payload: Omit<Expense, 'id'>) {
@@ -67,9 +56,9 @@ async function handleSubmit(payload: Omit<Expense, 'id'>) {
       await createExpense(payload)
     }
     isFormOpen.value = false
-  } catch (err: any) {
-    //console.error('Error al guardar gasto:', err)
-    //alert(`Error: ${err?.message || 'No se pudo guardar el gasto'}`)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Error desconocido al guardar gasto'
+    //console.error('[handleSubmit]', message)
   }
 }
 
@@ -78,64 +67,22 @@ async function handleDelete(id: number) {
   try {
     await deleteExpense(id)
     isDeleteOpen.value = false
-  } catch (err: any) {
-    //console.error('Error al eliminar gasto:', err)
-    //alert(`Error: ${err?.message || 'No se pudo eliminar el gasto'}`)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Error desconocido al eliminar gasto'
+    //console.error('[handleDelete]', message)
   }
 }
 
 // Exportar Excel
 async function handleExportExcel() {
-  try {
-    isExportingExcel.value = true
-    
-    const filters: ExportFilters = {}
-    if (category.value) {
-      filters.category = category.value
-    }
-    
-    await expenseService.exportExcel(filters)
-    
-    // Mostrar toast de éxito
-    showToast('success', 'Reporte Excel generado', 'El archivo se está descargando...')
-  } catch (err: any) {
-    console.error('Error al exportar Excel:', err)
-    showToast('error', 'Error al exportar', err?.message || 'No se pudo generar el reporte Excel')
-  } finally {
-    isExportingExcel.value = false
-  }
+  const filters = category.value ? { category: category.value } : {}
+  await exportExcel(filters)
 }
 
-// Exportar PDF
+// Exportar PDF  
 async function handleExportPdf() {
-  try {
-    isExportingPdf.value = true
-    
-    const filters: { category?: string } = {}
-    if (category.value) {
-      filters.category = category.value
-    }
-    
-    await expenseService.exportPdf(filters)
-    
-    // Mostrar toast de éxito
-    showToast('success', 'Reporte PDF generado', 'El archivo se está descargando...')
-  } catch (err: any) {
-    console.error('Error al exportar PDF:', err)
-    showToast('error', 'Error al exportar', err?.message || 'No se pudo generar el reporte PDF')
-  } finally {
-    isExportingPdf.value = false
-  }
-}
-
-// Función para mostrar toast con Nuxt UI
-function showToast(type: 'success' | 'error', title: string, message: string) {
-  toast.add({
-    title,
-    description: message,
-    icon: type === 'success' ? 'i-heroicons-check-circle' : 'i-heroicons-exclamation-circle',
-    color: type === 'success' ? 'success' : 'error'
-  })
+  const filters = category.value ? { category: category.value } : {}
+  await exportPdf(filters)
 }
 </script>
 
@@ -262,25 +209,13 @@ function showToast(type: 'success' | 'error', title: string, message: string) {
     </div>
 
     <!-- Pagination -->
-    <div class="flex justify-end">
-      <div class="flex items-center gap-2">
-        <button
-          @click="page > 1 ? page-- : null"
-          :disabled="page <= 1"
-          class="px-3 py-1 border border-gray-300 dark:border-gray-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 cursor-pointer"
-        >
-          ←
-        </button>
-        <span class="px-3 py-1 text-gray-700 dark:text-gray-300">Página {{ page }} de {{ Math.ceil(total / limit) }}</span>
-        <button
-          @click="page < Math.ceil(total / limit) ? page++ : null"
-          :disabled="page >= Math.ceil(total / limit)"
-          class="px-3 py-1 border border-gray-300 dark:border-gray-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 cursor-pointer"
-        >
-          →
-        </button>
-      </div>
-    </div>
+    <Pagination
+      :current-page="page"
+      :total-items="total"
+      :items-per-page="limit"
+      :disabled="loading"
+      @update:current-page="page = $event"
+    />
 
     <!-- Modales -->
     <ExpenseFormModal

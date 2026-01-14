@@ -16,6 +16,7 @@ useHead({
 })
 
 const { stats, loading, error, fetchStats } = useStats()
+
 </script>
 
 <template>
