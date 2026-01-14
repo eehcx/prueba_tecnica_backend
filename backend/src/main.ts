@@ -28,7 +28,12 @@ async function bootstrap() {
   });
   
   app.enableCors({ 
-    origin: '*', //localhost:3000
+    origin: [
+      //'*',
+      'http://localhost:3000',
+      'https://prueba-tecnica-prod.vercel.app',
+      'https://api.eehcx.life'
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: false
   });

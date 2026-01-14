@@ -6,15 +6,6 @@ Aplicación web full stack para gestión de gastos personales.
 
 Sistema CRUD completo para administrar gastos con backend en NestJS y frontend en Vue 3 + Nuxt UI.
 
-## Estructura del Proyecto
-
-```
-expenses/
-├── backend/     # API REST con NestJS (arquitectura hexagonal)
-├── frontend/    # Aplicación Vue 3 con Nuxt UI
-└── README.md    # Este archivo
-```
-
 ## Inicio Rápido
 
 ### 1. Clonar repositorio
@@ -46,6 +37,8 @@ Para documentación completa del backend, ver: [backend/README.md](backend/READM
 - Variables de entorno
 - Docker y despliegue
 
+*___NOTA:___ La url del backend es: https://api.eehcx.life (los endpoints se consultan apartir de /api/expenses)*
+
 ### Frontend  
 Para documentación del frontend, ver: [frontend/README.md](frontend/README.md)
 - Componentes Vue 3
@@ -53,6 +46,8 @@ Para documentación del frontend, ver: [frontend/README.md](frontend/README.md)
 - Composables y estado
 - TypeScript y validaciones
 - Responsive design
+
+*___NOTA:___ La url del frontend es: https://prueba-tecnica-prod.vercel.app/*
 
 ## Requisitos Cumplidos
 
@@ -74,11 +69,6 @@ Para documentación del frontend, ver: [frontend/README.md](frontend/README.md)
 - Paginación integrada
 - Exportación Excel/PDF
 - Gráficas estadísticas
-
-## URLs Locales
-
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3001
 
 ## Tecnologías
 
