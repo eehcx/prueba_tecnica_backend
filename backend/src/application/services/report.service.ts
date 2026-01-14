@@ -47,7 +47,7 @@ export class ReportService {
       worksheet.addRow({
         id: expense.id,
         description: expense.description,
-        amount: expense.amount,
+        amount: typeof expense.amount === 'string' ? parseFloat(expense.amount) : expense.amount,
         date: new Date(expense.date).toLocaleDateString('es-MX'),
         category: expense.category,
       });
@@ -60,8 +60,13 @@ export class ReportService {
     const totalRow = filteredExpenses.length + 2;
     worksheet.getCell(`B${totalRow}`).value = 'TOTAL:';
     worksheet.getCell(`B${totalRow}`).font = { bold: true };
+
+    const processedExpenses = filteredExpenses.map(expense => ({
+      ...expense,
+      amount: typeof expense.amount === 'string' ? parseFloat(expense.amount) : expense.amount
+    }));
     
-    const totalAmount = filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const totalAmount = processedExpenses.reduce((sum, expense) => sum + expense.amount, 0);
     worksheet.getCell(`C${totalRow}`).value = totalAmount;
     worksheet.getCell(`C${totalRow}`).font = { bold: true };
     worksheet.getCell(`C${totalRow}`).numFmt = '"$"#,##0.00';

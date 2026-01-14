@@ -82,3 +82,22 @@ curl -o gastos.xlsx "http://localhost:3001/api/expenses/export/excel"
 - **400**: Bad Request
 - **404**: No encontrado
 - **500**: Error interno
+
+## Documentación Swagger
+
+La API incluye documentación interactiva con Swagger.
+
+**Acceso:** `http://localhost:3001/api/docs`
+
+**Características:**
+- Documentación completa de todos los endpoints
+- Interfaz para probar endpoints en vivo
+- Schemas de DTOs y respuestas
+- Ejemplos de requests preconfigurados
+
+**Uso:**
+1. Navega a `/api/docs`
+2. Explora endpoints por tags (expenses, reports, charts)
+3. Haz clic en "Try it out" para probar
+4. Ejecuta requests y ve respuestas en tiempo real
+

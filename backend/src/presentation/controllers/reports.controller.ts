@@ -1,12 +1,19 @@
 import { Controller, Get, Res, Query } from '@nestjs/common';
 import type { Response } from 'express';
 import { ReportService } from '../../application/services/report.service';
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('reports')
 @Controller('expenses')
 export class ReportsController {
   constructor(private readonly reportService: ReportService) {}
 
   @Get('export/excel')
+  @ApiOperation({ summary: 'Exportar gastos a Excel' })
+  @ApiResponse({ status: 200, description: 'Archivo Excel generado exitosamente' })
+  @ApiQuery({ name: 'category', required: false, type: String, description: 'Filtrar por categoría' })
+  @ApiQuery({ name: 'startDate', required: false, type: String, description: 'Fecha de inicio (YYYY-MM-DD)' })
+  @ApiQuery({ name: 'endDate', required: false, type: String, description: 'Fecha de fin (YYYY-MM-DD)' })
   async exportExcel(
     @Res() res: Response,
     @Query('category') category?: string,
@@ -25,6 +32,9 @@ export class ReportsController {
   }
 
   @Get('export/pdf')
+  @ApiOperation({ summary: 'Exportar gastos a PDF' })
+  @ApiResponse({ status: 200, description: 'Archivo PDF generado exitosamente' })
+  @ApiQuery({ name: 'category', required: false, type: String, description: 'Filtrar por categoría' })
   async exportPdf(
     @Res() res: Response,
     @Query('category') category?: string
