@@ -40,7 +40,7 @@ function goNext() {
 </script>
 
 <template>
-  <div class="flex items-center justify-end gap-2">
+  <div class="flex items-center justify-end gap-2 md:px-5">
     <div v-if="showInfo && totalItems > 0" class="px-3 py-1 text-gray-700 dark:text-gray-300">
       Página {{ currentPage }} de {{ totalPages }}
     </div>

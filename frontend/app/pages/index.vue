@@ -89,7 +89,7 @@ async function handleExportPdf() {
 <template>
   <div class="space-y-6">
     <!-- Header -->
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:px-5">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Gestor de Gastos</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -109,11 +109,11 @@ async function handleExportPdf() {
     </div>
 
     <!-- Toolbar -->
-    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:px-5">
       <div class="relative md:w-64">
         <input
           v-model="query"
-          placeholder="Buscar gasto por descripcion..."
+          placeholder="Buscar gasto por descripción..."
           class="w-full border border-gray-300 dark:border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
         />
         <button
