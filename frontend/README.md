@@ -46,7 +46,7 @@ npm install
 ### 2. Configurar variables de entorno
 Crear archivo `.env` en la raíz del frontend:
 ```
-NUXT_PUBLIC_API_URL=http://localhost:3001/api
+VITE_API_BASE_URL=http://localhost:3001/api/expenses
 ```
 
 ### 3. Iniciar servidor de desarrollo
@@ -108,7 +108,7 @@ Obtención de estadísticas:
 ### Variables de entorno
 | Variable | Descripción | Valor por defecto |
 |----------|-------------|-------------------|
-| NUXT_PUBLIC_API_URL | URL del backend API | http://localhost:3001/api |
+| VITE_API_BASE_URL | URL del backend API | http://localhost:3001/api/expenses |
 
 ### Categorías predefinidas
 - comida - Alimentación
@@ -135,7 +135,7 @@ npm run lint         # Lint del código
 ## Integración con Backend
 
 La aplicación consume la API REST del backend:
-- Base URL: NUXT_PUBLIC_API_URL
+- Base URL: VITE_API_BASE_URL
 - Endpoints principales: /expenses, /expenses/stats, /expenses/export/*
 - Autenticación: No requerida (para esta prueba)
 

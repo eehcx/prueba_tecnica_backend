@@ -58,17 +58,16 @@ En este archivo comento las desiciones técnicas tomadas, desafíos enfrentados,
 
 ## Posibles Mejoras Futuras
 
-### 1. Corto Plazo (Próxima semana)
-- **Variables de entorno en frontend**: Implementar `NUXT_PUBLIC_API_URL` para diferentes entornos
+### 1. Corto Plazo 
 - **Testing**: Agregar pruebas E2E con Cypress/Playwright
 - **Cache**: Implementar Redis para endpoints frecuentes (`/stats`)
 
-### 2. Medio Plazo (1-2 meses)
+### 2. Medio Plazo 
 - **Autenticación**: JWT con refresh tokens, roles (admin/user)
 - **Subida de archivos**: Adjuntar comprobantes a gastos
 - **Notificaciones**: Email/SMS para gastos grandes o recurrentes
 
-### 3. Largo Plazo (3+ meses)
+### 3. Largo Plazo
 - **Microservicios**: Separar módulos (expenses, reports, auth)
 - **Monitoreo**: Logs estructurados, métricas con Prometheus
 - **CI/CD**: Pipeline completo con tests, lint, build y deploy automático

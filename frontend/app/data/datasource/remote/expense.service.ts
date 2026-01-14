@@ -3,7 +3,7 @@ import type { Pagination } from '../../../core/types/Pagination'
 import type { ExpenseFilters } from '../../../core/types/ExpenseFilters'
 import type { ExpenseStats } from '../../../core/types/Stats'
 
-const BASE_URL = 'http://localhost:3001/api/expenses'
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export interface ExportFilters {
     category?: string

@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.12.1",
+    "@types/node": "^25.0.8",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.0.4",
