@@ -41,7 +41,7 @@ HTTP → Controller → Service → Repository → DB
 ```
 
 ## Principios
-- Arquitectura hexagonal (ports & adapters)
+- Arquitectura Clean Architecture (inspirada en principios hexagonales)
 - Inyección de dependencias
 - Separación de responsabilidades
 - Repository pattern
