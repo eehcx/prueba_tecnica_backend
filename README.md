@@ -58,7 +58,7 @@ Para documentación del frontend, ver: [frontend/README.md](frontend/README.md)
 - Validaciones con DTOs
 - Manejo de errores
 - Seeds con datos de ejemplo
-- Arquitectura hexagonal
+- Arquitectura Clean Architecture (inspirada en principios hexagonales)
 
 ### Frontend (Vue 3 + Nuxt UI)
 - Interfaz profesional con Nuxt UI
